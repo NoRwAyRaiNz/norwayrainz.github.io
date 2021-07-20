@@ -1,0 +1,290 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Go语言排序总结——排序 | Jamie的奥兹海默症预防针</title>
+<link rel="shortcut icon" href="https://github.com/NoRwAyRaiNz/favicon.ico?v=1626790694958">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://github.com/NoRwAyRaiNz/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Go语言排序总结——排序 | Jamie的奥兹海默症预防针 - Atom Feed" href="https://github.com/NoRwAyRaiNz/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="🤔关于为什么学Go
+自从面字节被虐了之后得知后台都用的Go就打算转Go了。其实也是Java卷不动了，早转晚转都得转，不如现在转！
+然后在默默学习Go的过程中感觉到Go还是有很多优势的比如说语法简单什么的，然后也尝试用Go去刷
+LeetCo..." />
+    <meta name="keywords" content="Go,Knowledge" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://github.com/NoRwAyRaiNz">
+  <img class="avatar" src="https://github.com/NoRwAyRaiNz/images/avatar.png?v=1626790694958" alt="">
+  </a>
+  <h1 class="site-title">
+    Jamie的奥兹海默症预防针
+  </h1>
+  <p class="site-description">
+    Jamie的奥兹海默症预防针
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Go语言排序总结——排序
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-07-19
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+                <a href="https://github.com/NoRwAyRaiNz/tag/RsdM_L0z_/" class="post-tag">
+                  # Go
+                </a>
+              
+                <a href="https://github.com/NoRwAyRaiNz/tag/1kamxheOC/" class="post-tag">
+                  # Knowledge
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://github.com/NoRwAyRaiNz/post-images/go-yu-yan-pai-xu-zong-jie-nei-bu-pai-xu-1.jpeg" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="关于为什么学go">🤔关于为什么学Go</h1>
+<p>自从面字节被虐了之后得知后台都用的Go就打算转Go了。其实也是Java卷不动了，早转晚转都得转，不如现在转！<br>
+然后在默默学习Go的过程中感觉到Go还是有很多优势的比如说语法简单什么的，然后也尝试用Go去刷</p>
+<p><strong>LeetCode</strong> 。刷到以前写过的题就会用Go去重写一遍，慢慢就爱上了这个语言，那就用他来巩固知识吧</p>
+<h2 id="排序">👇排序</h2>
+<p>排序故名思意就是一种目的是将乱序的元素排列成有序的状态，八大排序算法都属于内部排序，即数据全部记录在内存中无需访问外存。</p>
+<h3 id="稳定排序">稳定排序</h3>
+<p>稳定的排序算法会让键值相等的记录维持相同的次序，排序前后相对位置不变，以下列举了要细说的排序算法</p>
+<ul>
+<li>冒泡排序(Bubble sort)</li>
+<li>插入排序(Insertion sort)</li>
+<li>归并排序(Merge sort)</li>
+<li>基数排序(Radix sort)</li>
+<li>桶排序(Bucket sort)</li>
+</ul>
+<h3 id="非稳定排序">非稳定排序</h3>
+<ul>
+<li>选择排序(Select sort)</li>
+<li>希尔排序(Shell sort)</li>
+<li>堆排序(Heap sort)</li>
+<li>快速排序(Quick sort)</li>
+</ul>
+<!-- 中间应该会贴上写好的文章的链接在这里 -->
+<h2 id="️总结">✍️总结</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Algorithm</th>
+<th style="text-align:center">Best</th>
+<th style="text-align:center">Average</th>
+<th style="text-align:center">Worst</th>
+<th style="text-align:center">Stability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Quick sort</td>
+<td style="text-align:center">O(n log(n))</td>
+<td style="text-align:center">O(n log(n))</td>
+<td style="text-align:center">O(n^2)</td>
+<td style="text-align:center">❌</td>
+</tr>
+<tr>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+</tr>
+<tr>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+</tr>
+<tr>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+</tr>
+<tr>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+</tr>
+<tr>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+</tr>
+<tr>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+</tr>
+<tr>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+</tr>
+<tr>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+<td style="text-align:center">单元格</td>
+</tr>
+</tbody>
+</table>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E5%85%B3%E4%BA%8E%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6go">🤔关于为什么学Go</a>
+<ul>
+<li><a href="#%E6%8E%92%E5%BA%8F">👇排序</a>
+<ul>
+<li><a href="#%E7%A8%B3%E5%AE%9A%E6%8E%92%E5%BA%8F">稳定排序</a></li>
+<li><a href="#%E9%9D%9E%E7%A8%B3%E5%AE%9A%E6%8E%92%E5%BA%8F">非稳定排序</a></li>
+</ul>
+</li>
+<li><a href="#%EF%B8%8F%E6%80%BB%E7%BB%93">✍️总结</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://github.com/NoRwAyRaiNz/post/hello-gridea/">
+              <h3 class="post-title">
+                Hello Gridea
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://github.com/NoRwAyRaiNz/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
