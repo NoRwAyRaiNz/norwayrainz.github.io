@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://norwayrainz.github.io</id>
     <title>Jamie的奥兹海默症预防针</title>
-    <updated>2021-07-20T15:55:47.004Z</updated>
+    <updated>2021-08-20T14:40:21.229Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://norwayrainz.github.io"/>
     <link rel="self" href="https://norwayrainz.github.io/atom.xml"/>
@@ -11,7 +11,60 @@
     <icon>https://norwayrainz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Jamie的奥兹海默症预防针</rights>
     <entry>
-        <title type="html"><![CDATA[Go语言排序总结——排序]]></title>
+        <title type="html"><![CDATA[Go语言排序——快速排序]]></title>
+        <id>https://norwayrainz.github.io/post/GoQuickSort/</id>
+        <link href="https://norwayrainz.github.io/post/GoQuickSort/">
+        </link>
+        <updated>2021-08-20T13:42:22.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="算法讲解">💡算法讲解</h1>
+<p>快速排序是Charles Antony Richard Hoare，(东尼·霍尔) 在 1962 年提出，来改进冒泡排序的算法。<br>
+是分治和递归思想在排序算法中的应用</p>
+<p>1 在待排序的数列中，选择一个元素作为pivot将数列分成两个区域<br>
+2 默认将pivot左边的区域放入比pivot小的数，右边则放入比pivot大的数，相同的数可以任意放在一边，操作完后，pivot将会在排序完成后的最终位置上，这个称作为partition（分区）操作。<br>
+3 每个区域内各自递归</p>
+<h2 id="特点">特点</h2>
+<p>一般情况下排序n个元素需要O(nlogn)次,最坏的情况下每次都取到最大或最小值需要O(n^2)次</p>
+<h1 id="代码实现">代码实现</h1>
+<pre><code class="language-go">func quickSort(nums []int, left, right int) {
+    if left &lt; right {
+        pivot := partition(nums, left, right)
+        //左半区
+        quickSort(nums, left, pivot - 1)
+        //右半区
+        quickSort(nums, pivot+1, right)
+    }
+}
+func partition(nums []int, left, right int) int {
+    pivot := nums[left]//默认以第一个数为基准
+    for left &lt; right {
+        //右指针值&gt;pivot时左移
+        for pivot &lt;= nums[right]{
+            right--
+        }
+        //右指针值&lt;pivot时与nums[left]交换
+        nums[left] = nums [right]
+        //左指针值&lt;pivot时右移
+        for pivot &gt;= nums[left]{
+            left++
+        }
+        //左指针值&gt;pivot时与nums[right]交换
+        nums[right] = nums[left]
+    }
+    //返回基准值的索引,为最终顺序
+    nums[left] = pivot
+    return left
+}
+//测试
+func TestQuickSort(t *testing.T) {
+    nums := []int {2,44,4,8,33,1,22,-11,6,34,55,54,9}
+    quickSort(nums,0, len(nums) - 1)
+    t.Log(nums)
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Go语言排序——总结]]></title>
         <id>https://norwayrainz.github.io/post/go-yu-yan-pai-xu-zong-jie-nei-bu-pai-xu-1/</id>
         <link href="https://norwayrainz.github.io/post/go-yu-yan-pai-xu-zong-jie-nei-bu-pai-xu-1/">
         </link>
