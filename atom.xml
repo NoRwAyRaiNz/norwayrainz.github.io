@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://norwayrainz.github.io</id>
     <title>Jamie的奥兹海默症预防针</title>
-    <updated>2021-08-20T14:40:21.229Z</updated>
+    <updated>2021-08-20T14:56:53.182Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://norwayrainz.github.io"/>
     <link rel="self" href="https://norwayrainz.github.io/atom.xml"/>
@@ -38,13 +38,13 @@ func partition(nums []int, left, right int) int {
     pivot := nums[left]//默认以第一个数为基准
     for left &lt; right {
         //右指针值&gt;pivot时左移
-        for pivot &lt;= nums[right]{
+        for left &lt; right &amp;&amp; pivot &lt;= nums[right]{
             right--
         }
         //右指针值&lt;pivot时与nums[left]交换
         nums[left] = nums [right]
         //左指针值&lt;pivot时右移
-        for pivot &gt;= nums[left]{
+        for left &lt; right &amp;&amp; pivot &gt;= nums[left]{
             left++
         }
         //左指针值&gt;pivot时与nums[right]交换

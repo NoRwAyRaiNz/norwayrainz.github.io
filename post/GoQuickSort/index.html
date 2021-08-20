@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Go语言排序——快速排序 | Jamie的奥兹海默症预防针</title>
-<link rel="shortcut icon" href="https://norwayrainz.github.io/favicon.ico?v=1629470398281">
+<link rel="shortcut icon" href="https://norwayrainz.github.io/favicon.ico?v=1629471410622">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://norwayrainz.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Go语言排序——快速排序 | Jamie的奥兹海默症预防针 - Atom Feed" href="https://norwayrainz.github.io/atom.xml">
@@ -24,7 +24,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://norwayrainz.github.io">
-  <img class="avatar" src="https://norwayrainz.github.io/images/avatar.png?v=1629470398281" alt="">
+  <img class="avatar" src="https://norwayrainz.github.io/images/avatar.png?v=1629471410622" alt="">
   </a>
   <h1 class="site-title">
     Jamie的奥兹海默症预防针
@@ -125,13 +125,13 @@ func partition(nums []int, left, right int) int {
     pivot := nums[left]//默认以第一个数为基准
     for left &lt; right {
         //右指针值&gt;pivot时左移
-        for pivot &lt;= nums[right]{
+        for left &lt; right &amp;&amp; pivot &lt;= nums[right]{
             right--
         }
         //右指针值&lt;pivot时与nums[left]交换
         nums[left] = nums [right]
         //左指针值&lt;pivot时右移
-        for pivot &gt;= nums[left]{
+        for left &lt; right &amp;&amp; pivot &gt;= nums[left]{
             left++
         }
         //左指针值&gt;pivot时与nums[right]交换
