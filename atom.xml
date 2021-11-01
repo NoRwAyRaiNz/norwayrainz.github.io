@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://norwayrainz.github.io</id>
     <title>Jamie的奥兹海默症预防针</title>
-    <updated>2021-09-16T02:18:28.826Z</updated>
+    <updated>2021-11-01T14:45:00.256Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://norwayrainz.github.io"/>
     <link rel="self" href="https://norwayrainz.github.io/atom.xml"/>
@@ -10,6 +10,40 @@
     <logo>https://norwayrainz.github.io/images/avatar.png</logo>
     <icon>https://norwayrainz.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Jamie的奥兹海默症预防针</rights>
+    <entry>
+        <title type="html"><![CDATA[#踩坑日记# 记一次git 绕过不明bug]]></title>
+        <id>https://norwayrainz.github.io/post/caikengdiary1/</id>
+        <link href="https://norwayrainz.github.io/post/caikengdiary1/">
+        </link>
+        <updated>2021-11-01T13:42:58.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="gitlab就不能clone-密码我也输了啊-整个大无语">🙅Gitlab就不能clone 密码我也输了啊 整个大无语</h1>
+<h2 id="事情是这样的">事情是这样的</h2>
+<p>师父给我小任务改代码，结果发现不能clone项目，一开始还以为是权限的问题，结果找了后台管理员发现我账号没问题但就是说我输密码不对，但是网页是正常登录的，最后是在师父电脑上登了我的账号之后我再clone就正常了，离谱吧。<br>
+就这么迷迷糊糊的过了周末，今天上班clone新代码的时候又来，clone输入密码后失败。好家伙，我这次退了重新登录，网页版依然没问题，我就纳闷儿了。搜了一波报错的解决方案，说是sshkey的问题，折腾了半天，发现有一个3年钱的sshkey，好家伙，会不会就是因为这个key的密码和我mac账户的密码不一样，<br>
+所以失败啊🙄。<br>
+就参考了大佬们和gitlab官方的方法生成新的sshkey。</p>
+<ol>
+<li>就不检查已存在的sshkey了 就是因为这个key有问题才踩坑的（吧？）</li>
+<li>生成新的sshkey<pre><code class="language-shell">% ssh-keygen -t ed25519 -C &quot;&lt;comment&gt;&quot; 
+#ed25519 是一种加密算法 可以选择RSA等 comment 内容会出现在.pub（公钥）文件中
+</code></pre>
+</li>
+<li>然后连按3次回车 存在默认路径就好</li>
+<li>输入<pre><code class="language-shell">cat ~/.ssh/id_ed25519.pub
+# ssh-ed25519 AAAAB3NzaC1yc2EAAAADAQABAAABAQC6eNtGpNGwstc...
+</code></pre>
+</li>
+<li>ssh开头的内容到邮箱结束都是公钥的内容全都复制下来</li>
+<li>到gitlab的页面粘贴 再给这个sshkey一个名字就好。</li>
+<li>私钥再没有pub后缀的同名文件里，要保护好。</li>
+<li>最后<pre><code class="language-shell">ssh -T git@xxx.com
+# 如果看到successfully 那恭喜你嘿嘿！
+</code></pre>
+</li>
+</ol>
+<h2 id="这样就可以正常clone啊什么的了">👍这样就可以正常clone啊什么的了</h2>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[SSO单点登录]]></title>
         <id>https://norwayrainz.github.io/post/sso/</id>

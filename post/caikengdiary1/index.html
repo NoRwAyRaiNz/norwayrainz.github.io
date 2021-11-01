@@ -2,20 +2,19 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SSO单点登录 | Jamie的奥兹海默症预防针</title>
+<title>#踩坑日记# 记一次git 绕过不明bug | Jamie的奥兹海默症预防针</title>
 <link rel="shortcut icon" href="https://norwayrainz.github.io/favicon.ico?v=1635777698209">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://norwayrainz.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="SSO单点登录 | Jamie的奥兹海默症预防针 - Atom Feed" href="https://norwayrainz.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="#踩坑日记# 记一次git 绕过不明bug | Jamie的奥兹海默症预防针 - Atom Feed" href="https://norwayrainz.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="🤔为什么要有sso（single signon）
-sso单点登录保证了一个账户在多个系统上实现单一用户的登录，
-由于现在网站系统越来越复杂，内容、服务都越来越多，不同的服务之间的通信，
-如何让用户不用重复登录就可以访问用以顶域下的所有服务..." />
-    <meta name="keywords" content="Knowledge" />
+    <meta name="description" content="🙅Gitlab就不能clone 密码我也输了啊 整个大无语
+事情是这样的
+师父给我小任务改代码，结果发现不能clone项目，一开始还以为是权限的问题，结果找了后台管理员发现我账号没问题但就是说我输密码不对，但是网页是正常登录的，最后是在师..." />
+    <meta name="keywords" content="踩坑日记,Git" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -81,66 +80,66 @@ sso单点登录保证了一个账户在多个系统上实现单一用户的登�
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              SSO单点登录
+              #踩坑日记# 记一次git 绕过不明bug
             </h2>
             <div class="post-info">
               <span>
-                2021-09-16
+                2021-11-01
               </span>
               <span>
                 2 min read
               </span>
               
-                <a href="https://norwayrainz.github.io/tag/1kamxheOC/" class="post-tag">
-                  # Knowledge
+                <a href="https://norwayrainz.github.io/tag/7x6clYAnS/" class="post-tag">
+                  # 踩坑日记
+                </a>
+              
+                <a href="https://norwayrainz.github.io/tag/hR-OfVDplL/" class="post-tag">
+                  # Git
                 </a>
               
             </div>
             
-              <img class="post-feature-image" src="https://norwayrainz.github.io/post-images/sso.png" alt="">
+              <img class="post-feature-image" src="https://norwayrainz.github.io/post-images/caikengdiary1.webp" alt="">
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h1 id="为什么要有ssosingle-signon">🤔为什么要有sso（single signon）</h1>
-<p>sso单点登录保证了一个账户在多个系统上实现单一用户的登录，<br>
-由于现在网站系统越来越复杂，内容、服务都越来越多，不同的服务之间的通信，<br>
-如何让用户不用重复登录就可以访问用以顶域下的所有服务呢，现在比较流行的方案就是sso。</p>
-<h1 id="实现sso">🔑实现sso</h1>
-<p>在server端是根据sessionId来判断用户，client端携带cookie告知服务端身份,<br>
-用户注册登录知乎把用户相关信息存入redis，设置过期时间，key为一个token，使用uuid，uuid生成后<br>
-存入cookie中，登录后需要重置redis和cookie的失效时间。</p>
-<h1 id="sso原理">📔sso原理</h1>
-<p>CAS标准流程<br>
-<img src="https://norwayrainz.github.io/post-images/1631758462027.png" alt="" loading="lazy"></p>
+                <h1 id="gitlab就不能clone-密码我也输了啊-整个大无语">🙅Gitlab就不能clone 密码我也输了啊 整个大无语</h1>
+<h2 id="事情是这样的">事情是这样的</h2>
+<p>师父给我小任务改代码，结果发现不能clone项目，一开始还以为是权限的问题，结果找了后台管理员发现我账号没问题但就是说我输密码不对，但是网页是正常登录的，最后是在师父电脑上登了我的账号之后我再clone就正常了，离谱吧。<br>
+就这么迷迷糊糊的过了周末，今天上班clone新代码的时候又来，clone输入密码后失败。好家伙，我这次退了重新登录，网页版依然没问题，我就纳闷儿了。搜了一波报错的解决方案，说是sshkey的问题，折腾了半天，发现有一个3年钱的sshkey，好家伙，会不会就是因为这个key的密码和我mac账户的密码不一样，<br>
+所以失败啊🙄。<br>
+就参考了大佬们和gitlab官方的方法生成新的sshkey。</p>
 <ol>
-<li>用户访问某需要登录验证的App系统</li>
-<li>被验证失败 则302重定向到CAS系统（sso系统），并将参数encode到URL中，sso系统发现未用户无登录session，跳转到sso验证</li>
-<li>用户填写登录sso，登陆信息及login ticket，post到body中，验证成功后生成sso session，CASTGC（ticket granting cookie)含有Ticket Granting Ticket（TGT）,TGE作为sso session的session key，service ticket传给用户</li>
-<li>持有ST跳转到要访问的App系统，App系统请求CAS server验证ST有效性</li>
-<li>CAS验证通过返回 200 + 包含成功信息和已验证的主和任意参数的XML文档给App系统</li>
-<li>App系统写入session 状态设置域下cookie, 并除去ST信息 防止地址栏泄露</li>
-<li>再次访问时携带cookie即登录状态</li>
-<li>访问App2时，跳转到CAS server验证cookie中的TGT 成功则携带ST返回</li>
-<li>携带ST访问App2，aap2 请求CAS server验证ST</li>
-<li>返回200 + XML文档</li>
-<li>App2 建立session，生成域内cookie 返回</li>
-<li>用户携带cookie访问 成功</li>
+<li>就不检查已存在的sshkey了 就是因为这个key有问题才踩坑的（吧？）</li>
+<li>生成新的sshkey<pre><code class="language-shell">% ssh-keygen -t ed25519 -C &quot;&lt;comment&gt;&quot; 
+#ed25519 是一种加密算法 可以选择RSA等 comment 内容会出现在.pub（公钥）文件中
+</code></pre>
+</li>
+<li>然后连按3次回车 存在默认路径就好</li>
+<li>输入<pre><code class="language-shell">cat ~/.ssh/id_ed25519.pub
+# ssh-ed25519 AAAAB3NzaC1yc2EAAAADAQABAAABAQC6eNtGpNGwstc...
+</code></pre>
+</li>
+<li>ssh开头的内容到邮箱结束都是公钥的内容全都复制下来</li>
+<li>到gitlab的页面粘贴 再给这个sshkey一个名字就好。</li>
+<li>私钥再没有pub后缀的同名文件里，要保护好。</li>
+<li>最后<pre><code class="language-shell">ssh -T git@xxx.com
+# 如果看到successfully 那恭喜你嘿嘿！
+</code></pre>
+</li>
 </ol>
-<h1 id="总结">📝总结</h1>
-<ol>
-<li>sso保障各业务用户资源安全</li>
-<li>避免用户重复登录</li>
-<li>ST需要CAS server验证有效性 防止用户伪造</li>
-<li>TGT在访问不同App的时候带上可以交给sso验证是否为同一个用户</li>
-</ol>
+<h2 id="这样就可以正常clone啊什么的了">👍这样就可以正常clone啊什么的了</h2>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89ssosingle-signon">🤔为什么要有sso（single signon）</a></li>
-<li><a href="#%E5%AE%9E%E7%8E%B0sso">🔑实现sso</a></li>
-<li><a href="#sso%E5%8E%9F%E7%90%86">📔sso原理</a></li>
-<li><a href="#%E6%80%BB%E7%BB%93">📝总结</a></li>
+<li><a href="#gitlab%E5%B0%B1%E4%B8%8D%E8%83%BDclone-%E5%AF%86%E7%A0%81%E6%88%91%E4%B9%9F%E8%BE%93%E4%BA%86%E5%95%8A-%E6%95%B4%E4%B8%AA%E5%A4%A7%E6%97%A0%E8%AF%AD">🙅Gitlab就不能clone 密码我也输了啊 整个大无语</a>
+<ul>
+<li><a href="#%E4%BA%8B%E6%83%85%E6%98%AF%E8%BF%99%E6%A0%B7%E7%9A%84">事情是这样的</a></li>
+<li><a href="#%E8%BF%99%E6%A0%B7%E5%B0%B1%E5%8F%AF%E4%BB%A5%E6%AD%A3%E5%B8%B8clone%E5%95%8A%E4%BB%80%E4%B9%88%E7%9A%84%E4%BA%86">👍这样就可以正常clone啊什么的了</a></li>
+</ul>
+</li>
 </ul>
 
               </div>
@@ -151,9 +150,9 @@ sso单点登录保证了一个账户在多个系统上实现单一用户的登�
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://norwayrainz.github.io/post/GoQuickSort/">
+            <a href="https://norwayrainz.github.io/post/sso/">
               <h3 class="post-title">
-                Go语言排序——快速排序
+                SSO单点登录
               </h3>
             </a>
           </div>
