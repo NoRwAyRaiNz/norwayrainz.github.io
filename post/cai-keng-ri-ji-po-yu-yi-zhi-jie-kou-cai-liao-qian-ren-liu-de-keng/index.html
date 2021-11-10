@@ -1,0 +1,231 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>#踩坑日记#迫于移植接口，踩了前人留的坑 | Jamie的奥兹海默症预防针</title>
+<link rel="shortcut icon" href="https://norwayrainz.github.io/favicon.ico?v=1636530700722">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://norwayrainz.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="#踩坑日记#迫于移植接口，踩了前人留的坑 | Jamie的奥兹海默症预防针 - Atom Feed" href="https://norwayrainz.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="✍️移植代码
+💪接到的任务是完成 今日/历史订单成交接口的移植
+移植前和移植后的差别在于移植前的数据是双重加密过的，移植目标的需求少一层加密，就按照已有接口照葫芦画瓢，边写边理解代码。
+以下是中间反复定位错误和改bug的过程
+
+
+反复对照..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://norwayrainz.github.io">
+  <img class="avatar" src="https://norwayrainz.github.io/images/avatar.png?v=1636530700722" alt="">
+  </a>
+  <h1 class="site-title">
+    Jamie的奥兹海默症预防针
+  </h1>
+  <p class="site-description">
+    想在海里跑
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/NoRwAyRaiNz" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              #踩坑日记#迫于移植接口，踩了前人留的坑
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-11-10
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h2 id="️移植代码">✍️移植代码</h2>
+<h4 id="接到的任务是完成-今日历史订单成交接口的移植">💪接到的任务是完成 今日/历史订单成交接口的移植</h4>
+<p>移植前和移植后的差别在于移植前的数据是双重加密过的，移植目标的需求少一层加密，就按照已有接口照葫芦画瓢，边写边理解代码。</p>
+<p>以下是中间反复定位错误和改bug的过程</p>
+<ol>
+<li>
+<h5 id="反复对照params_check">反复对照params_check()</h5>
+<p>由于报错出现在参数校验的位置所以就在反复看这块的的代码和json数据，但其实没有什么东西可看所以浪费了很久时间，错误并不出在这里。</p>
+</li>
+<li>
+<h5 id="根据日志发现request的不同">根据日志发现request的不同</h5>
+<p>发现代码暂时没问题后发现原接口是可以跑成功的，所以理论上request相同的话就能成功，于是我将两个接口的request日志打出</p>
+<figure data-type="image" tabindex="1"><img src="https://norwayrainz.github.io/post-images/1636530636322.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://norwayrainz.github.io/post-images/1636530628791.png" alt="" loading="lazy"></figure>
+<p>从中发现data主体数据都是对的，就是移植代码由于加密函数不同，数据套在了一层data的里面，但在前面params_check()中处理过了，所以问题不在这里。</p>
+</li>
+<li>
+<h5 id="找到传入hs接口的request格式">找到传入hs接口的request格式</h5>
+<p>在params_check()后会call一个process_request() 这个函数通过nginx.location传递数据到恒生的402接口</p>
+<pre><code class="language-lua">local res402 = ngx.location.capture_multi{{ &quot;/hs/QueryHistoryDeliver_915&quot;, { method = ngx.HTTP_POST, body = cjson.encode({data = request}) } }}
+
+</code></pre>
+<p>就用2中相同的方法在日志中定位 这里传的request长什么样</p>
+</li>
+<li>
+<h5 id="找到问题在整个外层多套了一层data">找到问题在整个外层多套了一层data</h5>
+<p>日志中发现了答案，这个request就是在图2中的request外层多了一个data{}，</p>
+<p>难怪恒生的params_check()中也报了参数校验的问题</p>
+</li>
+<li>
+<h5 id="data-requestdata-提出data内容解决问题">data = request[&quot;data&quot;] 提出data内容解决问题</h5>
+<p>既然找到了问题所在，就去解决它，这个点其实很容易，由于这边把整个request给了data，导致最终有两层data，那就把request中data里的数据赋给data，大功告成！</p>
+</li>
+</ol>
+<h2 id="recap">😎Recap</h2>
+<p>首先，我对照前人写好的代码进行移植，发现他这个参数起名不太规范，明明 俩功能一样的函数，移植之后还换了变量名，由于我也不知道什么情况就没敢动，然后发现还有漏打日志的...种种奇葩代码，然后就是基本是没有注释的，读起来真的非常困难，哎。不过总算是解决了这个问题，以后还是要多打日志定位错误，还是不断踩坑不断进步吧。</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%EF%B8%8F%E7%A7%BB%E6%A4%8D%E4%BB%A3%E7%A0%81">✍️移植代码</a><br>
+*
+<ul>
+<li><a href="#%E6%8E%A5%E5%88%B0%E7%9A%84%E4%BB%BB%E5%8A%A1%E6%98%AF%E5%AE%8C%E6%88%90-%E4%BB%8A%E6%97%A5%E5%8E%86%E5%8F%B2%E8%AE%A2%E5%8D%95%E6%88%90%E4%BA%A4%E6%8E%A5%E5%8F%A3%E7%9A%84%E7%A7%BB%E6%A4%8D">💪接到的任务是完成 今日/历史订单成交接口的移植</a>
+<ul>
+<li><a href="#%E5%8F%8D%E5%A4%8D%E5%AF%B9%E7%85%A7params_check">反复对照params_check()</a></li>
+<li><a href="#%E6%A0%B9%E6%8D%AE%E6%97%A5%E5%BF%97%E5%8F%91%E7%8E%B0request%E7%9A%84%E4%B8%8D%E5%90%8C">根据日志发现request的不同</a></li>
+<li><a href="#%E6%89%BE%E5%88%B0%E4%BC%A0%E5%85%A5hs%E6%8E%A5%E5%8F%A3%E7%9A%84request%E6%A0%BC%E5%BC%8F">找到传入hs接口的request格式</a></li>
+<li><a href="#%E6%89%BE%E5%88%B0%E9%97%AE%E9%A2%98%E5%9C%A8%E6%95%B4%E4%B8%AA%E5%A4%96%E5%B1%82%E5%A4%9A%E5%A5%97%E4%BA%86%E4%B8%80%E5%B1%82data">找到问题在整个外层多套了一层data</a></li>
+<li><a href="#data-requestdata-%E6%8F%90%E5%87%BAdata%E5%86%85%E5%AE%B9%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98">data = request[&quot;data&quot;] 提出data内容解决问题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#recap">😎Recap</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://norwayrainz.github.io/post/caikengdiary1/">
+              <h3 class="post-title">
+                #踩坑日记# 记一次git 绕过不明bug
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://norwayrainz.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
