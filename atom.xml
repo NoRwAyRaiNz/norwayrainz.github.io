@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://norwayrainz.github.io</id>
     <title>Jamie的奥兹海默症预防针</title>
-    <updated>2021-11-10T07:53:23.471Z</updated>
+    <updated>2021-11-10T07:54:50.515Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://norwayrainz.github.io"/>
     <link rel="self" href="https://norwayrainz.github.io/atom.xml"/>
@@ -35,8 +35,7 @@
 <li>
 <h5 id="找到传入hs接口的request格式">找到传入hs接口的request格式</h5>
 <p>在params_check()后会call一个process_request() 这个函数通过nginx.location传递数据到恒生的402接口</p>
-<pre><code class="language-lua">local res402 = ngx.location.capture_multi{{ &quot;/hs/QueryHistoryDeliver_915&quot;, { method = ngx.HTTP_POST, body = cjson.encode({data = request}) } }}
-
+<pre><code class="language-l">local res402 = ngx.location.capture_multi{{ &quot;/hs/QueryHistoryDeliver_915&quot;, { method = ngx.HTTP_POST, body = cjson.encode({data = request}) } }}
 </code></pre>
 <p>就用2中相同的方法在日志中定位 这里传的request长什么样</p>
 </li>
