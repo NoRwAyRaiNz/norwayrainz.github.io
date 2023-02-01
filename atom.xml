@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://norwayrainz.github.io</id>
     <title>Jamie的奥兹海默症预防针</title>
-    <updated>2023-02-01T16:29:38.680Z</updated>
+    <updated>2023-02-01T16:33:22.749Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://norwayrainz.github.io"/>
     <link rel="self" href="https://norwayrainz.github.io/atom.xml"/>
@@ -43,7 +43,8 @@
 那么。<br>
 <strong><font color=red>真相只有一个！</font></strong></p>
 <h4 id="结构体创建并插入数据库一定有一个规则">💡“结构体创建并插入数据库一定有一个规则！”</h4>
-<p>然后去找了gorm的官方文档，果然，如果结构体命名为User 那么对应的数据库表名为users，多个单词将会转化为蛇型命名且最后会加s</p>
+<p>然后去找了gorm的官方文档，果然，如果结构体命名为User 那么对应的数据库表名为users，多个单词将会转化为蛇型命名且最后会加s<br>
+[<a href="https://gorm.io/zh_CN/docs/conventions.html">gorm约定</a>]</p>
 <p>果然，最后改了结构体名称之后就成功插入新数据了。</p>
 <h1 id="总结">📝总结</h1>
 <p>好好看框架文档！！！！！！</p>
