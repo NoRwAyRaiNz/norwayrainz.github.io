@@ -2,14 +2,53 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://norwayrainz.github.io</id>
     <title>Jamie的奥兹海默症预防针</title>
-    <updated>2021-11-10T07:57:57.723Z</updated>
+    <updated>2023-02-01T16:07:45.495Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://norwayrainz.github.io"/>
     <link rel="self" href="https://norwayrainz.github.io/atom.xml"/>
     <subtitle>想在海里跑</subtitle>
     <logo>https://norwayrainz.github.io/images/avatar.png</logo>
     <icon>https://norwayrainz.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, Jamie的奥兹海默症预防针</rights>
+    <rights>All rights reserved 2023, Jamie的奥兹海默症预防针</rights>
+    <entry>
+        <title type="html"><![CDATA[记录被自己蠢哭的3个小时]]></title>
+        <id>https://norwayrainz.github.io/post/ji-lu-bei-zi-ji-chun-ku-de-3-ge-xiao-shi/</id>
+        <link href="https://norwayrainz.github.io/post/ji-lu-bei-zi-ji-chun-ku-de-3-ge-xiao-shi/">
+        </link>
+        <updated>2023-02-01T15:08:50.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="事情是这样的">😭事情是这样的</h1>
+<pre><code>在写毕设的feature，想添加一个以新表以track_id作为主标主键track_id的外键，
+然后通过记录时间戳来记录创建、更新、及史低价格变更的时间来实现价格曲线图。
+</code></pre>
+<p>这么一个简单的功能，由于和代码已是最熟悉的陌生人，plus，焦虑和水群，再上完菲教口语课之后的3个多小时才大概写了点东西。</p>
+<h2 id="4个小时就干了这点事">😩4个小时就干了这点事</h2>
+<ol>
+<li>建好了表结构(呵呵，是我以为我建好了，事实证明我是小丑🤡</li>
+<li>在看了油管上一个关于构件规范化project structure的视频之后，解耦了一些函数。</li>
+<li>建立了新表的结构体（踩了不看文档的坑</li>
+<li>测试+修bug</li>
+</ol>
+<h2 id="罪魁祸首是">😤罪魁祸首是</h2>
+<p><strong><font color=red>gorm框架的约定</font></strong><br>
+由于没有熟读文档，自己对于命名不够规范导致我创建的表结构和结构体并不匹配，一点都不丝滑。<br>
+主结构体Movie是刚立项的时候写的，已经过于久远，所以已经忘记了gorm的创建规则，然后我又照抄来着，所以新结构体写的是MoiveDetail。<br>
+<img src="https://norwayrainz.github.io/post-images/1675267096303.png" alt="" loading="lazy"><br>
+最后在跑的时候数据库的报错是 PostgreSQL error 42P01，也就是说movie_details这个表不存在。我在这里卡了好久，以为我在数据库里新建的表名叫 track_price_detail。</p>
+<hr>
+<p>(这条报错没截图，用后面类似的截图来解释一下，错误是一样的，命名不够规范，结构体和表里的字段对不上)<br>
+<img src="https://norwayrainz.github.io/post-images/1675267649029.png" alt="" loading="lazy"></p>
+<hr>
+<p>所以问题就出现在这里，苦苦谷歌+百度（找错了方向😢），最后才想到要不就把结构体改成TrackPriceDetail吧，<br>
+果真报错变成了track_price_details这个表不存在，<br>
+那么。<br>
+<strong><font color=red>真相只有一个！</font></strong></p>
+<h4 id="结构体创建并插入数据库一定有一个规则">💡“结构体创建并插入数据库一定有一个规则！”</h4>
+<p>然后去找了gorm的官方文档，果然，如果结构体命名为User 那么对应的数据库表名为users，多个单词将会转化为蛇型命名且最后会加s</p>
+<p>果然，最后改了结构体名称之后就成功插入新数据了。</p>
+<h1 id="总结">📝总结</h1>
+<p>好好看框架文档！！！！！！</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[#踩坑日记#迫于移植接口，踩了前人留的坑]]></title>
         <id>https://norwayrainz.github.io/post/cai-keng-ri-ji-po-yu-yi-zhi-jie-kou-cai-liao-qian-ren-liu-de-keng/</id>
